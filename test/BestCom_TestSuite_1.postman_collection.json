@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "da255510-7df6-423e-826f-6f027401603e",
+		"name": "BestCom_TestSuite_1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Gary Demo",
+			"item": [
+				{
+					"name": "Watson NLU Sentiment Analysis",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "42ef24cd-53e8-4192-9bcd-dcf1d11b897f",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Sentiment is negative\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.sentiment.document.lable).to.eql(\"negative\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "o1gR5spmLHGe-C9jAr1uiDPuxuKXbfFewgTb95m2o_zi",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "apikey",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"This movie is so boring\",\n  \"features\": {\n    \"sentiment\": {\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{watson_NLU_url}}/api/v1/analyze?version=2020-08-01",
+							"host": [
+								"{{watson_NLU_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"analyze"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "2020-08-01"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "workshop_demo1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e2742ab2-ec27-44f9-8431-06b0e6f35ba1",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"company argument is 'BestCom'\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.args.company).to.eql(\"BestCom\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/get?city=Taipei&company=BestCom",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"get"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "Taipei"
+								},
+								{
+									"key": "company",
+									"value": "BestCom"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "68927f63-f9e0-430f-9d14-e69f4f81d48d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "1db8ec86-1079-4d75-8f91-1e20990c2bc1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
