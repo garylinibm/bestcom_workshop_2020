@@ -21,7 +21,7 @@
 									"});",
 									"pm.test(\"Sentiment is negative\", function () {",
 									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.sentiment.document.lable).to.eql(\"negative\");",
+									"    pm.expect(jsonData.sentiment.document.label).to.eql(\"negative\");",
 									"});"
 								],
 								"type": "text/javascript"
