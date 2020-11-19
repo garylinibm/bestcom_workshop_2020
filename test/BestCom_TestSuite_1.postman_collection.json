@@ -1,28 +1,39 @@
 {
 	"info": {
-		"_postman_id": "da255510-7df6-423e-826f-6f027401603e",
-		"name": "BestCom_TestSuite_1",
+		"_postman_id": "2d7d98b5-1a77-44a7-85d1-668cdf5b8fd2",
+		"name": "Temp for jenkins",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Gary Demo",
+			"name": "Basic",
 			"item": [
 				{
-					"name": "Watson NLU Sentiment Analysis",
+					"name": "postman_get",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "42ef24cd-53e8-4192-9bcd-dcf1d11b897f",
+								"id": "f215dea8-b101-4c39-a8d7-7cc73bb8c8ea",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
-									"pm.test(\"Sentiment is negative\", function () {",
+									"",
+									"pm.test(\"city is 'Taipei'\", function () {",
 									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.sentiment.document.label).to.eql(\"negative\");",
+									"    pm.expect(jsonData.args.city).to.eql(\"Taipei\");",
 									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "af37ad20-361f-49b9-bfc4-dbf5480c5d70",
+								"exec": [
+									"pm.environment.set(\"timestamp\", new Date().getTime());"
 								],
 								"type": "text/javascript"
 							}
@@ -30,81 +41,14 @@
 					],
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "password",
-									"value": "o1gR5spmLHGe-C9jAr1uiDPuxuKXbfFewgTb95m2o_zi",
-									"type": "string"
-								},
-								{
-									"key": "username",
-									"value": "apikey",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"text\": \"This movie is so boring\",\n  \"features\": {\n    \"sentiment\": {\n    }\n  }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{watson_NLU_url}}/api/v1/analyze?version=2020-08-01",
-							"host": [
-								"{{watson_NLU_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"analyze"
-							],
-							"query": [
-								{
-									"key": "version",
-									"value": "2020-08-01"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "workshop_demo1",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "e2742ab2-ec27-44f9-8431-06b0e6f35ba1",
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"company argument is 'BestCom'\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.args.company).to.eql(\"BestCom\");",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://postman-echo.com/get?city=Taipei&company=BestCom",
-							"protocol": "https",
+							"raw": "{{get_url}}/get?city=Taipei&company=BestCom&timestamp={{timestamp}}",
 							"host": [
-								"postman-echo",
-								"com"
+								"{{get_url}}"
 							],
 							"path": [
 								"get"
@@ -117,11 +61,247 @@
 								{
 									"key": "company",
 									"value": "BestCom"
+								},
+								{
+									"key": "timestamp",
+									"value": "{{timestamp}}"
 								}
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Advance",
+			"item": [
+				{
+					"name": "Success Path",
+					"item": [
+						{
+							"name": "sentiment analysis (200) - negative",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fb4b0e16-ffa8-4a8c-8a3e-924085991913",
+										"exec": [
+											"pm.test(\"sentiment is negative\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.sentiment.document.label).to.eql(\"negative\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "o1gR5spmLHGe-C9jAr1uiDPuxuKXbfFewgTb95m2o_zi",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "apikey",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"text\": \"This movie is boring\",\n  \"features\": {\n    \"sentiment\": {\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{watson_url}}/v1/analyze?version=2020-08-01",
+									"host": [
+										"{{watson_url}}"
+									],
+									"path": [
+										"v1",
+										"analyze"
+									],
+									"query": [
+										{
+											"key": "version",
+											"value": "2020-08-01"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "sentiment analysis (200) - positive",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a064dfab-e6fc-411c-8ecc-5001de07fed8",
+										"exec": [
+											"pm.test(\"sentiment is positive\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.sentiment.document.label).to.eql(\"positive\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "o1gR5spmLHGe-C9jAr1uiDPuxuKXbfFewgTb95m2o_zi",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "apikey",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"text\": \"This movie is interesting\",\n  \"features\": {\n    \"sentiment\": {\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{watson_url}}/v1/analyze?version=2020-08-01",
+									"host": [
+										"{{watson_url}}"
+									],
+									"path": [
+										"v1",
+										"analyze"
+									],
+									"query": [
+										{
+											"key": "version",
+											"value": "2020-08-01"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "afe4092d-7e4c-458c-89c1-9991b14ee65f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "493551ad-da6b-4a00-9e3b-2af77d7b111d",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Failure Path",
+					"item": [
+						{
+							"name": "sentiment analysis (400) - invalid request - empty content",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "38e8d108-a9aa-4625-9d89-dfc8978f5a00",
+										"exec": [
+											"pm.test(\"Status code is 400 (Bad Request)\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "o1gR5spmLHGe-C9jAr1uiDPuxuKXbfFewgTb95m2o_zi",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "apikey",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"features\": {\n    \"sentiment\": {\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{watson_url}}/v1/analyze?version=2020-08-01",
+									"host": [
+										"{{watson_url}}"
+									],
+									"path": [
+										"v1",
+										"analyze"
+									],
+									"query": [
+										{
+											"key": "version",
+											"value": "2020-08-01"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -131,7 +311,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "68927f63-f9e0-430f-9d14-e69f4f81d48d",
+				"id": "97ddbe19-f94e-4b6a-b412-1f8c5b9e8417",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -141,7 +321,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "1db8ec86-1079-4d75-8f91-1e20990c2bc1",
+				"id": "d46b6e2c-aaaf-4096-82d2-f5a5916a67a0",
 				"type": "text/javascript",
 				"exec": [
 					""
